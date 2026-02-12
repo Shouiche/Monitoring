@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+log_file="../04/logs/access_1.log ../04/logs/access_2.log ../04/logs/access_3.log ../04/logs/access_4.log ../04/logs/access_5.log"
+
+function CHECK_ARGS() {
+  if [[ $1 -ne 0 ]]; then
+    echo -e "\033[031mСкрипт должен запускаться без параметров\033[0m"
+    exit 1
+  fi
+}
+
+function CHECK_LOG_FILES() {
+  for file in $log_file; do
+    if [ ! -f "$file" ]; then
+      echo -e "\033[031mФайл не существует: $file\033[0m"
+      exit 1
+    fi
+  done
+}
+
+function CHECK_GOACCESS() {
+  if ! [ -x "$(command -v goaccess)" ]; then
+    echo -e "\033[031mКоманда 'goaccess' не существует, установите с помощью следующей команды:\033[0m"
+    echo -e "\033[031msudo apt install goaccess\033[0m"
+    echo -e "\033[031sudo apt install xdg-utils\033[0m"
+    exit 1
+  fi
+}
+
