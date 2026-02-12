@@ -1,0 +1,14 @@
+check_log_dir() {
+    local log_dir="$1"
+    if [ ! -d "$log_dir" ]; then
+        echo "Ошибка: директория с логами не существует: $log_dir" >&2
+        echo "Создайте директорию и поместите туда логи nginx" >&2
+        exit 1
+    fi
+    
+    if [ -z "$(ls -A "$log_dir" 2>/dev/null)" ]; then
+        echo "Ошибка: директория с логами пуста: $log_dir" >&2
+        echo "Поместите в неё файлы логов access_*.log" >&2
+        exit 1
+    fi
+}
